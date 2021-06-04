@@ -40,24 +40,34 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "authenticated"
-    ])
+    ...mapGetters(["authenticated"])
   },
-  // created(){
-  //   if (this.authenticated) {
-  //     this.$router.push({ name: "requests" });
-  //   }
-  // },
   methods: {
-    async login() {
+    login() {
       this.error = null;
-      try {
-        await this.$store.dispatch("login", this.data);
-        await this.$router.push({ path: "requests" });
-      } catch (error) {
-        this.error = error;
-      }
+
+      this.$store
+        .dispatch("login", this.data)
+        .then(result => {
+          console.log(result);
+          let role = this.$store.getters.user_role;
+          if (role == 'admin') {
+            this.$router.push({ path: "/admin/requests" });
+          }
+          else if (role == 'tester') {
+              this.$router.push({ path: "/tester/requests" });
+          }
+          else if (role == 'requestor') {
+              this.$router.push({ path: "/requestor/requests" });
+          }
+          else{
+            this.$router.push({ path: "/" });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <v-col>
-    <div><h1>Admin Portal</h1></div>
+      <div><h1>Tester portal</h1></div>
     <div v-if="requests" class="posts-wrapper">
       <div v-for="(request, index) in requests" :key="index">
         <h3>{{ request.title }}</h3>

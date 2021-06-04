@@ -1,13 +1,17 @@
   
 import axios from "axios";
 
+
 let instance = axios.create({
     withCredentials: true,
 });
 
 instance.interceptors.request.use(request => {
+
+    let token = sessionStorage.getItem('token');
     request.headers.common['Accept']       = 'application/json';
     request.headers.common['Content-Type'] = 'application/json';
+    request.headers.common['Authorization'] = `Bearer ${token}`;
     return request;
 });
 

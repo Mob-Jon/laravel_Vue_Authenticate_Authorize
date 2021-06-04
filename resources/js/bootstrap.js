@@ -1,3 +1,6 @@
+const { default: axios } = require('axios');
+import accessToken from '../js/store/index'
+
 window._ = require('lodash');
 
 /**
@@ -18,10 +21,13 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+let token = accessToken.getters['token']
 
 window.axios = require('axios');
 
+axios.defaults.withCredentials = true;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

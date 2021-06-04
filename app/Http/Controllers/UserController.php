@@ -40,6 +40,7 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
-        return response(['response' => 'success logout'], 200);
+
+        return response(Auth::check(), 200);
     }
 }
